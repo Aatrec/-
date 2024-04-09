@@ -1,0 +1,69 @@
+using System;
+
+public class StringStack
+{
+    private string[] stackArray;
+    private int top;
+    private int capacity;
+
+    public StringStack(int capacity)
+    {
+        this.capacity = capacity;
+        stackArray = new string[capacity];
+        top = -1;
+    }
+
+    public void Push(string item)
+    {
+        if (top == capacity - 1)
+        {
+            Array.Resize(ref stackArray, capacity * 2);
+            capacity *= 2;
+        }
+        stackArray[++top] = item;
+    }
+
+    public string Pop()
+    {
+        if (top == -1)
+        {
+            throw new InvalidOperationException("Стек порожній");
+        }
+        string item = stackArray[top];
+        stackArray[top--] = null;
+        return item;
+    }
+
+    public string Peek()
+    {
+        if (top == -1)
+        {
+            throw new InvalidOperationException("Стек порожній");
+        }
+        return stackArray[top];
+    }
+
+    public bool IsEmpty()
+    {
+        return top == -1;
+    }
+
+    public int Count()
+    {
+        return top + 1;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        StringStack stack = new StringStack(5);
+        stack.Push("one");
+        stack.Push("two");
+        stack.Push("three");
+        Console.WriteLine("Top element: " + stack.Peek());
+        Console.WriteLine("Popped element: " + stack.Pop());
+        Console.WriteLine("Top element after pop: " + stack.Peek());
+    }
+}
